@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">FitiDiary</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="timer_reset">Reset</string>
+    <string name="timer_stop">Stop</string>
+    <string name="timer_start">Start</string>
+    <string name="context_menu_edit">edit</string>
+    <string name="context_menu_delete">delete</string>
+    <string name="main_menu_add">Add</string>
+    <string name="main_menu_exit">Exit</string>
+</resources>
