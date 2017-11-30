@@ -12,21 +12,22 @@ import net.kdilla.fitidiary.utils.PrefsID;
  */
 
 public class WorkoutProgramActivity extends AppCompatActivity {
-    String programName;
-    int programId;
-    TextView programNameTextView;
+    private String programName;
+    private int programId;
+    private TextView programNameTextView;
+
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_program);
 
-        programNameTextView=findViewById(R.id.text_view_program_name);
-
-        Bundle bundle = getIntent().getExtras();
-        if (bundle!=null){
-            programId=bundle.getInt(PrefsID.PROGRAM_ID);
-            programName=bundle.getString(PrefsID.PROGRAM_NAME);
-            programNameTextView.setText(programName);
-        }
+//        programNameTextView=findViewById(R.id.text_view_program_name);
+//
+//        Bundle bundle = getIntent().getExtras();
+//        if (bundle!=null){
+//            programId=bundle.getInt(PrefsID.PROGRAM_ID);
+//            programName=bundle.getString(PrefsID.PROGRAM_NAME);
+//            programNameTextView.setText(programName);
+//        }
     }
 }

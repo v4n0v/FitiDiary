@@ -25,57 +25,41 @@ public class ProgramListFragment extends Fragment {
     ListView listView;
     List<String> programs;
     ArrayAdapter<String> adapter;
+
     private ProgramListListener mainActivity;
 
     public interface ProgramListListener {
         void onListItemClick(int id);
     }
-//
-//    @Override
-//    public void onAttach(Context context) {
-//        mainActivity = (ProgramListListener) context;
-//        super.onAttach(context);
-//    }
 
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        View rootView = inflater.inflate(R.layout.fragment_program_list, container, false);
-////        initView(container);
-//        listView = rootView.findViewById(R.id.list_programs);
-//        programs = new ArrayList<>();
-//        for (int i = 1; i < 6; i++) {
-//            programs.add("Workout program " + i);
-//        }
-//        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, programs);
-//        listView.setAdapter(adapter);
-//        registerForContextMenu(listView);
-//
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View itemClicked, int position,
-//                                    long id) {
-//                MyFragment2 fragment = (MyFragment2) myFragmentManager
-//                        .findFragmentByTag(TAG_2);
-//
-//                if (fragment == null) {
-//
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString(KEY_MSG_2, "Заменили на второй фрагмент");
-//                    myFragment2.setArguments(bundle);
-//
-//                    FragmentTransaction fragmentTransaction = myFragmentManager
-//                            .beginTransaction();
-//                    fragmentTransaction.replace(R.id.container, myFragment2,
-//                            TAG_2);
-//                    fragmentTransaction.commit();
-//
-//                } else {
-//                    fragment.setMsg("Второй фрагмент уже загружен");
-//                }
-//            }
-//        });
-//
-//        return rootView;
-//    }
+    @Override
+    public void onAttach(Context context) {
+        mainActivity = (ProgramListListener) context;
+        super.onAttach(context);
+    }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_program_list, container, false);
+//        initView(container);
+        listView = rootView.findViewById(R.id.list_programs);
+        programs = new ArrayList<>();
+        for (int i = 1; i < 6; i++) {
+            programs.add("Workout program " + i);
+        }
+        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, programs);
+        listView.setAdapter(adapter);
+        registerForContextMenu(listView);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View itemClicked, int position,
+                                    long id) {
+                showWorkoutProgramScreen(position);
+            }
+        });
+
+        return rootView;
+    }
 
     public void initContent(ViewGroup content) {
 
@@ -92,4 +76,8 @@ public class ProgramListFragment extends Fragment {
 //        listView = rootView.findViewById(R.id.list_programs);
 //
 //    }
+    private void showWorkoutProgramScreen(int id){
+        mainActivity.onListItemClick(id);
+    }
+
 }
