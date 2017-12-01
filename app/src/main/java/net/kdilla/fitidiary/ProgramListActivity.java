@@ -5,11 +5,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.ContextMenu;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -29,10 +25,11 @@ public class ProgramListActivity extends AppCompatActivity implements ProgramLis
     FragmentManager myFragmentManager;
 
     ListView listView;
-    List<String> programs;
+
+
     ArrayAdapter<String> adapter;
 
-
+    List <String> programs;
     String programName;
     int programID;
 
@@ -57,7 +54,8 @@ public class ProgramListActivity extends AppCompatActivity implements ProgramLis
 
         programs = new ArrayList<>();
         for (int i = 1; i < 6; i++) {
-            programs.add("Workout program " + i);
+            //programs.add("Workout program " + i);
+            programs.add( "Workout program " + i );
         }
 
     }

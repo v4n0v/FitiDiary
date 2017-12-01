@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:padding="@dimen/small_margin"
     android:layout_marginBottom="@dimen/small_margin"
-    android:background="@color/colorWhite">
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    android:padding="@dimen/small_margin">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <TextView
         android:id="@+id/tv_program_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/header_font_size"
-        tools:text="Program"/>
-    <TextView
-        android:id="@+id/tv_program_days"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/mid_font_size"
-        android:text="3 days training"/>
+        tools:text="Program" />
+        <TextView
+            android:id="@+id/txtOptionDigit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="&#8942;"
+            android:textAppearance="?android:textAppearanceLarge" />
+    </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_program_days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3 days training"
+            android:textSize="@dimen/mid_font_size" />
+
+
 
 </LinearLayout>
