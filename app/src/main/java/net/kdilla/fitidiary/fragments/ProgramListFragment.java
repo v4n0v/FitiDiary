@@ -3,16 +3,18 @@ package net.kdilla.fitidiary.fragments;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import net.kdilla.fitidiary.R;
+import net.kdilla.fitidiary.utils.PrefsID;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,11 @@ public class ProgramListFragment extends Fragment {
     List<String> programs;
     ArrayAdapter<String> adapter;
 
+    public RecyclerView getProgramSelectRecyclerView() {
+        return programSelectRecyclerView;
+    }
+
+    RecyclerView programSelectRecyclerView;
     private ProgramListListener mainActivity;
 
     public interface ProgramListListener {
@@ -40,43 +47,77 @@ public class ProgramListFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_program_list, container, false);
-//        initView(container);
-        listView = rootView.findViewById(R.id.list_programs);
+
         programs = new ArrayList<>();
         for (int i = 1; i < 6; i++) {
             programs.add("Workout program " + i);
         }
-        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, programs);
-        listView.setAdapter(adapter);
-        registerForContextMenu(listView);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View itemClicked, int position,
-                                    long id) {
-                showWorkoutProgramScreen(position);
-            }
-        });
-
+        programSelectRecyclerView = rootView.findViewById(R.id.recycler_list_programs);
+        registerForContextMenu(programSelectRecyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(PrefsID.VERTICAL);
+        programSelectRecyclerView.setLayoutManager(layoutManager);
+        programSelectRecyclerView.setAdapter(new MyAdapter());
         return rootView;
     }
 
-    public void initContent(ViewGroup content) {
+    private class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        private TextView programNameTextView;
+
+        MyViewHolder(LayoutInflater inflater, ViewGroup parent) {
+            super(inflater.inflate(R.layout.item_program, parent, false));
+            itemView.setOnClickListener(this);
+            programNameTextView = (TextView) itemView.findViewById(R.id.tv_program_name);
+        }
+
+        void bind(int position) {
+
+            String category = programs.get(position);
+            programNameTextView.setText(category);
+
+        }
+
+        @Override
+        public void onClick(View view) {
+            showWorkoutProgramScreen(this.getLayoutPosition());
+            //getActivity().onItemClick(this.getLayoutPosition());
+        }
     }
 
-    //    @Override
+    private class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
+
+        @Override
+        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            LayoutInflater inflater = LayoutInflater.from(getActivity());
+            return new MyViewHolder(inflater, parent);
+        }
+
+        @Override
+        public void onBindViewHolder(MyViewHolder holder, int position) {
+            holder.bind(position);
+        }
+
+
+        public int getItemCount() {
+            //   return City.cities.length;
+            //  return GetWeatherFromRes.getWeatherList(getActivity()).length;
+            return programs.size();
+        }
+    }
+
+//    public void initContent(ViewGroup content) {
+//
+//    }
+//    @Override
 //    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 //        super.onCreateContextMenu(menu, v, menuInfo);
-//        getMenuInflater().inflate(R.menu.context_menu, menu);
+//        getActivity().getMenuInflater().inflate(R.menu.context_menu, menu);
 //
 //    }
-//    private void initView(ViewGroup container) {
-//
-//        listView = rootView.findViewById(R.id.list_programs);
-//
-//    }
-    private void showWorkoutProgramScreen(int id){
+
+    private void showWorkoutProgramScreen(int id) {
         mainActivity.onListItemClick(id);
     }
 

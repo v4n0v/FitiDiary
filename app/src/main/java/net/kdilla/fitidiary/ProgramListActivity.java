@@ -16,16 +16,16 @@ import android.widget.Toast;
 
 import net.kdilla.fitidiary.fragments.ExerciseFragment;
 import net.kdilla.fitidiary.fragments.ProgramListFragment;
+import net.kdilla.fitidiary.fragments.TrainingWeekFragment;
 import net.kdilla.fitidiary.utils.PrefsID;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProgramListActivity extends AppCompatActivity// implements ProgramListFragment.ProgramListListener
-{
-    ProgramListFragment programList;
-    public ExerciseFragment exerciseDetail;
+public class ProgramListActivity extends AppCompatActivity implements ProgramListFragment.ProgramListListener {
     ProgramListFragment programListFragment;
+    ExerciseFragment exerciseDetail;
+    TrainingWeekFragment trainingWeekFragment;
     FragmentManager myFragmentManager;
 
     ListView listView;
@@ -42,49 +42,29 @@ public class ProgramListActivity extends AppCompatActivity// implements ProgramL
         setContentView(R.layout.activity_program_list);
         initView();
 
+        programListFragment = new ProgramListFragment();
+        //registerForContextMenu(programListFragment.getProgramSelectRecyclerView());
+        myFragmentManager = getFragmentManager();
+        if (savedInstanceState == null) {
+            // при первом запуске программы
+            FragmentTransaction fragmentTransaction = myFragmentManager
+                    .beginTransaction();
 
-//        programListFragment = new ProgramListFragment();
-//        myFragmentManager = getFragmentManager();
-//        if (savedInstanceState == null) {
-//            // при первом запуске программы
-//            FragmentTransaction fragmentTransaction = myFragmentManager
-//                    .beginTransaction();
-//
-//            // добавляем в контейнер при помощи метода add()
-//            fragmentTransaction.replace(R.id.container, programListFragment, PrefsID.TAG_1);
-//            fragmentTransaction.commit();
-//        }
+            // добавляем в контейнер при помощи метода add()
+            fragmentTransaction.replace(R.id.container, programListFragment, PrefsID.TAG_1);
+            fragmentTransaction.commit();
+        }
 
         programs = new ArrayList<>();
         for (int i = 1; i < 6; i++) {
             programs.add("Workout program " + i);
         }
 
-
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_activated_1, programs);
-        listView.setAdapter(adapter);
-        registerForContextMenu(listView);
-//        final Intent intent =  new Intent(this, WorkoutProgramActivity.class);
-      //  final Intent intent = getIntent();
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View itemClicked, int position,
-                                    long id) {
-                Toast.makeText(ProgramListActivity.this, programs.get(position), Toast.LENGTH_SHORT).show();
-
-                Intent intent =  new Intent(ProgramListActivity.this, WorkoutProgramActivity.class);
-                intent.putExtra(PrefsID.PROGRAM_ID, position);
-                intent.putExtra(PrefsID.PROGRAM_NAME, programs.get(position));
-                startActivity(intent);
-
-            }
-        });
-
     }
 
 
     private void initView() {
-        listView = findViewById(R.id.list_programs);
+        //    listView = findViewById(R.id.list_programs);
 
     }
 
@@ -92,30 +72,6 @@ public class ProgramListActivity extends AppCompatActivity// implements ProgramL
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        getMenuInflater().inflate(R.menu.context_menu, menu);
-
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-//    public boolean onContextItemSelected(MenuItem item) {
-        //return super.onContextItemSelected(item);
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        switch (item.getItemId()) {
-            case R.id.menu_edit:
-                   editElement(info.position);
-                return true;
-            case R.id.menu_delete:
-                   deleteElement();
-                return true;
-            default:
-                return super.onContextItemSelected(item);
-        }
     }
 
     private void editElement(int position) {
@@ -126,13 +82,15 @@ public class ProgramListActivity extends AppCompatActivity// implements ProgramL
         Toast.makeText(ProgramListActivity.this, "delete", Toast.LENGTH_SHORT).show();
     }
 
-//    @Override
-//    public void onListItemClick(int id) {
-//
-//        Intent intent =  new Intent(ProgramListActivity.this, WorkoutProgramActivity.class);
-//        intent.putExtra(PrefsID.PROGRAM_ID, id);
-////        intent.putExtra(PrefsID.PROGRAM_NAME, programs.get(id));
-//        startActivity(intent);
-//
-//    }
+    @Override
+    public void onListItemClick(int id) {
+
+        Intent intent = new Intent(ProgramListActivity.this, WorkoutProgramActivity.class);
+        intent.putExtra(PrefsID.PROGRAM_ID, id);
+        intent.putExtra(PrefsID.PROGRAM_NAME, programs.get(id));
+        startActivity(intent);
+
+    }
+
+
 }

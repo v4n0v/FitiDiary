@@ -10,4 +10,11 @@
     <string name="context_menu_delete">delete</string>
     <string name="main_menu_add">Add</string>
     <string name="main_menu_exit">Exit</string>
+
+    <string-array name="muscle_groups">
+        <item>Legs</item>
+        <item>Chest</item>
+        <item>Back</item>
+    </string-array>
+
 </resources>

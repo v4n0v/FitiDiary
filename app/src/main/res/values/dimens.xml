@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="font_size_header_exercise">28sp</dimen>
+    <!--отступы-->
     <dimen name="std_margin">10dp</dimen>
+    <dimen name="small_margin">5dp</dimen>
+    <dimen name="mid_margin">20dp</dimen>
+    <!--размеры шрифтов-->
+    <dimen name="header_font_size">28sp</dimen>
+    <dimen name="mid_font_size">18sp</dimen>
+
 </resources>

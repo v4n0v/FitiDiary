@@ -16,14 +16,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1."
-            android:textSize="@dimen/font_size_header_exercise"
+            android:textSize="@dimen/header_font_size"
             tools:text="1."/>
     <TextView
         android:id="@+id/exercise_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bench press"
-        android:textSize="@dimen/font_size_header_exercise"
+        android:textSize="@dimen/header_font_size"
         tools:text="Exercise"/>
     </LinearLayout>
     <LinearLayout
