@@ -41,7 +41,9 @@ public class ProgramListFragment extends Fragment implements View.OnClickListene
     private FragmentListener mainActivity;
 
     Program program;
-
+    public void initPrograms(  ArrayList<Program> programs){
+        this.programs=programs;
+    }
     @Override
     public void onAttach(Context context) {
         mainActivity = (FragmentListener) context;
@@ -52,16 +54,8 @@ public class ProgramListFragment extends Fragment implements View.OnClickListene
         View rootView = inflater.inflate(R.layout.fragment_program_list, container, false);
         addNewProgramBtn = rootView.findViewById(R.id.btn_new_program);
         addNewProgramBtn.setOnClickListener(this);
-        programs = new ArrayList<>();
+    //    programs = new ArrayList<>();
         adapter = new MyAdapter();
-        program = new Program("Jay Cutler Program", 4, 10);
-
-
-        programs.add(program);
-        for (int i = 1; i < 7; i++) {
-      //      programs.add(new ProgramRecycleItem("Workout program " + i, "3days"));
-            programs.add( new Program("Jay Cutler Program "+i , 4, 10));
-        }
 
         programSelectRecyclerView = rootView.findViewById(R.id.recycler_list_programs);
         registerForContextMenu(programSelectRecyclerView);

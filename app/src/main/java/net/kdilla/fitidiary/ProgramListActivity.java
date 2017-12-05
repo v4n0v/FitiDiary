@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import net.kdilla.fitidiary.core.Program;
 import net.kdilla.fitidiary.fragments.ExerciseFragment;
 import net.kdilla.fitidiary.fragments.FragmentListener;
 import net.kdilla.fitidiary.fragments.ProgramListFragment;
@@ -28,10 +29,10 @@ public class ProgramListActivity extends AppCompatActivity implements FragmentLi
 
     ListView listView;
 
-
+    ArrayList<Program> programs;
     ArrayAdapter<String> adapter;
+    Program program;
 
-    List <String> programs;
     String programName;
     int programID;
 
@@ -40,8 +41,20 @@ public class ProgramListActivity extends AppCompatActivity implements FragmentLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_program_list);
         initView();
+        programs = new ArrayList<>();
+        program = new Program("Jay Cutler Program", 4, 10);
+
+
+        programs.add(program);
+        for (int i = 1; i < 7; i++) {
+            //      programs.add(new ProgramRecycleItem("Workout program " + i, "3days"));
+            programs.add( new Program("Jay Cutler Program "+i , 4, 10));
+        }
+
+
 
         programListFragment = new ProgramListFragment();
+        programListFragment.initPrograms(programs);
         //registerForContextMenu(programListFragment.getProgramSelectRecyclerView());
         myFragmentManager = getFragmentManager();
         if (savedInstanceState == null) {
@@ -97,7 +110,7 @@ public class ProgramListActivity extends AppCompatActivity implements FragmentLi
     public void onFragmentRecycleElementClick( View v,int id) {
         Intent intent = new Intent(ProgramListActivity.this, WorkoutProgramActivity.class);
         intent.putExtra(PrefsID.PROGRAM_ID, id);
-        intent.putExtra(PrefsID.PROGRAM_NAME, programs.get(id));
+        intent.putExtra(PrefsID.PROGRAM_NAME, programs.get(id).getName());
         startActivity(intent);
     }
 
@@ -106,7 +119,7 @@ public class ProgramListActivity extends AppCompatActivity implements FragmentLi
         if (viewId == R.menu.context_menu) {
             Intent intent = new Intent(ProgramListActivity.this, WorkoutProgramActivity.class);
             intent.putExtra(PrefsID.PROGRAM_ID, pos);
-            intent.putExtra(PrefsID.PROGRAM_NAME, programs.get(pos));
+            intent.putExtra(PrefsID.PROGRAM_NAME, programs.get(pos).getName());
             startActivity(intent);
         }
     }
