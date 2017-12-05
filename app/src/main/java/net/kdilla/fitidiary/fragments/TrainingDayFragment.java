@@ -1,15 +1,16 @@
 package net.kdilla.fitidiary.fragments;
 
-
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import net.kdilla.fitidiary.R;
@@ -18,36 +19,32 @@ import net.kdilla.fitidiary.utils.PrefsID;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TrainingWeekFragment extends Fragment{
-    public List<String> getDays() {
-        return days;
-    }
+/**
+ * Created by avetc on 02.12.2017.
+ */
 
-    List<String> days;
-    private FragmentListener mainActivity;
+public class TrainingDayFragment extends Fragment implements View.OnClickListener{
 
-    public int getSelectedLayerPosition() {
-        return selectedLayerPosition;
-    }
-
-    int selectedLayerPosition;
-    public interface TrainingWeekListener {
-        void onTrainingDayClick(int id);
-    }
+    List<String> exercise;
+    FragmentListener mainActivity;
+    Button startBtn;
     @Override
     public void onAttach(Context context) {
-        mainActivity = (FragmentListener) context;
+        mainActivity=(FragmentListener)context;
         super.onAttach(context);
     }
-    @Override
-    public View onCreateView(LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_training_week, container, false);
-        days= new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            days.add("Day "+(i+1));
-        }
 
-        RecyclerView programSelectRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_training_week);
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_training_day, container, false);
+        exercise= new ArrayList<>();
+       exercise.add("Bench press");
+        exercise.add("Incline barbell press");
+        exercise.add("Flies");
+        startBtn = rootView.findViewById(R.id.btn_start_workout);
+        startBtn.setOnClickListener(this);
+
+        RecyclerView programSelectRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_training_day);
         registerForContextMenu(programSelectRecyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(PrefsID.VERTICAL);
@@ -57,31 +54,39 @@ public class TrainingWeekFragment extends Fragment{
         return rootView;
     }
 
+    @Override
+    public void onClick(View view) {
+        startWorkout(view);
+    }
+
     private class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView daysTextView;
+        private TextView exerciseTextView;
         private TextView muscleGroupTextView;
 
         MyViewHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.item_training_week, parent, false));
+            super(inflater.inflate(R.layout.item_training_day, parent, false));
             itemView.setOnClickListener(this);
-            daysTextView = (TextView) itemView.findViewById(R.id.tv_days);
-            muscleGroupTextView = itemView.findViewById(R.id.tv_muscle_group);
+            exerciseTextView = (TextView) itemView.findViewById(R.id.tv_exercise);
+          //  muscleGroupTextView = itemView.findViewById(R.id.tv_muscle_group);
         }
 
         void bind(int position) {
 
-            String day = days.get(position);
+            String exercise = TrainingDayFragment.this.exercise.get(position);
             String[] muscles = getResources().getStringArray(R.array.muscle_groups);
-            daysTextView.setText(day);
-            muscleGroupTextView.setText(muscles[position]);
+            exerciseTextView.setText(exercise);
+       //     muscleGroupTextView.setText(muscles[position]);
         }
 
         @Override
         public void onClick(View view) {
-            //selectedLayerPosition=this.getLayoutPosition();
-            showTrainingDay(this.getLayoutPosition(), view);
+         //startWorkout(view);
 
         }
+    }
+
+    private void startWorkout(View view) {
+        mainActivity.onFragmentButtonClick(view.getId());
     }
 
     private class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
@@ -100,12 +105,9 @@ public class TrainingWeekFragment extends Fragment{
 
         public int getItemCount() {
 
-            return days.size();
+            return exercise.size();
         }
     }
 
-    private void showTrainingDay(int id, View v){
-        mainActivity.onFragmentRecycleElementClick(v, id);
-    }
 
 }

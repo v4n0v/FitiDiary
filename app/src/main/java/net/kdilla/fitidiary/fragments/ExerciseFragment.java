@@ -2,10 +2,11 @@ package net.kdilla.fitidiary.fragments;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.app.FragmentManager;
+import  android.support.v4.app.Fragment;
+
 import android.app.FragmentTransaction;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +27,11 @@ public class ExerciseFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_exercise, container, false);
 
 
-        FragmentManager fragmentManager = getChildFragmentManager();//Внимание! ChildFragmentManager!
+        android.support.v4.app.FragmentManager fragmentManager = getChildFragmentManager();//Внимание! ChildFragmentManager!
         //Ищем Фрагмент по тегу и если его нет, то создаем Фрагмент с таким тегом
         StopWatchFragment stopwatchFragment = (StopWatchFragment) fragmentManager.findFragmentByTag(PrefsID.STOPWATCH_FRAGMENT_TAG);
         if (stopwatchFragment == null) {
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             stopwatchFragment = new StopWatchFragment();
             fragmentTransaction.replace(R.id.stopwatch_container, stopwatchFragment, PrefsID.STOPWATCH_FRAGMENT_TAG);
             fragmentTransaction.commit();

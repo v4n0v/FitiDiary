@@ -7,5 +7,6 @@
     <!--размеры шрифтов-->
     <dimen name="header_font_size">28sp</dimen>
     <dimen name="mid_font_size">18sp</dimen>
+    <dimen name="border_margin">2dp</dimen>
 
 </resources>

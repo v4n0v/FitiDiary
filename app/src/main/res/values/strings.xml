@@ -15,6 +15,9 @@
         <item>Legs</item>
         <item>Chest</item>
         <item>Back</item>
+        <item>Abs</item>
+        <item>Shoulders</item>
+        <item>Arms</item>
     </string-array>
 
 </resources>

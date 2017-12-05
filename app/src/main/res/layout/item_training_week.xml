@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginBottom="@dimen/small_margin"
+    android:layout_marginBottom="@dimen/border_margin"
     android:padding="@dimen/std_margin"
     android:background="@color/colorWhite">
     <RelativeLayout

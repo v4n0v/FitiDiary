@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import net.kdilla.fitidiary.fragments.ExerciseFragment;
+import net.kdilla.fitidiary.fragments.FragmentListener;
 import net.kdilla.fitidiary.fragments.ProgramListFragment;
 import net.kdilla.fitidiary.fragments.TrainingWeekFragment;
 import net.kdilla.fitidiary.utils.PrefsID;
@@ -18,7 +20,7 @@ import net.kdilla.fitidiary.utils.PrefsID;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProgramListActivity extends AppCompatActivity implements ProgramListFragment.ProgramListListener {
+public class ProgramListActivity extends AppCompatActivity implements FragmentListener{
     ProgramListFragment programListFragment;
     ExerciseFragment exerciseDetail;
     TrainingWeekFragment trainingWeekFragment;
@@ -52,11 +54,11 @@ public class ProgramListActivity extends AppCompatActivity implements ProgramLis
             fragmentTransaction.commit();
         }
 
-        programs = new ArrayList<>();
-        for (int i = 1; i < 6; i++) {
-            //programs.add("Workout program " + i);
-            programs.add( "Workout program " + i );
-        }
+//        programs = new ArrayList<>();
+//        for (int i = 1; i < 6; i++) {
+//            //programs.add("Workout program " + i);
+//            programs.add( "Workout program " + i );
+//        }
 
     }
 
@@ -80,15 +82,32 @@ public class ProgramListActivity extends AppCompatActivity implements ProgramLis
         Toast.makeText(ProgramListActivity.this, "delete", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onListItemClick(int id) {
 
+
+    @Override
+    public void onFragmentButtonClick(int id) {
+        switch (id) {
+            case R.id.btn_new_program:
+                Toast.makeText(ProgramListActivity.this, "Create new", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    @Override
+    public void onFragmentRecycleElementClick( View v,int id) {
         Intent intent = new Intent(ProgramListActivity.this, WorkoutProgramActivity.class);
         intent.putExtra(PrefsID.PROGRAM_ID, id);
         intent.putExtra(PrefsID.PROGRAM_NAME, programs.get(id));
         startActivity(intent);
-
     }
 
-
+    @Override
+    public void onFragmentMenuElementClick(int viewId, int pos) {
+        if (viewId == R.menu.context_menu) {
+            Intent intent = new Intent(ProgramListActivity.this, WorkoutProgramActivity.class);
+            intent.putExtra(PrefsID.PROGRAM_ID, pos);
+            intent.putExtra(PrefsID.PROGRAM_NAME, programs.get(pos));
+            startActivity(intent);
+        }
+    }
 }

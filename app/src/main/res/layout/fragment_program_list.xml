@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/std_margin"
+    android:orientation="vertical">
 
-    >
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_list_programs"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
-    </android.support.v7.widget.RecyclerView>
-    <!--<ListView-->
-        <!--android:id="@+id/list_programs"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"></ListView>-->
-    <!--<Button-->
-        <!--android:id="@+id/btn_add_program"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content" />-->
-</LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_list_programs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        </android.support.v7.widget.RecyclerView>
+    </ScrollView>
+
+
+    <Button
+        android:id="@+id/btn_new_program"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Create new program" />
+
+</RelativeLayout>
